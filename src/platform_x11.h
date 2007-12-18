@@ -17,21 +17,40 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#ifndef PLATFORM_UTIL
-#define PLATFORM_UTIL
+#ifndef PLATFORM_X11
+#define PLATFORM_X11
 
-#include "platform_base.h"
 
-#ifdef Q_WS_WIN
-#include "platform_win.h"
-#endif
+class PlatformImp : public PlatformBase {
+private:
+public:
+	PlatformImp() : PlatformBase() 		
+	{
 
-#ifdef Q_WS_MAC
-#include "platform_osx.h"
-#endif
+	}
+	~PlatformImp() {
+	}
 
-#ifdef Q_WS_X11
-#include "platform_x11.h"
-#endif
+	// Mandatory functions
+	QString GetSettingsDirectory() { 
+	    return "";
+	};
+
+
+	QList<Directory> GetInitialDirs() {
+		QList<Directory> list;
+		return list;
+	}
+
+
+	QString expandEnvironmentVars(QString str) {return str;} 
+	void AddToNotificationArea() {};
+	void RemoveFromNotificationArea() {};
+
+	bool isAlreadyRunning() {
+	    return false;
+	}
+};
+
 
 #endif
