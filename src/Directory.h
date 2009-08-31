@@ -17,25 +17,37 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-#include "globals.h"
-#include <QDir>
-#include <QFile>
-#include <QDateTime>
-#include <QTextStream>
+#ifndef DIRECTORY_H
+#define DIRECTORY_H
 
 
-QWidget* gMainWidget;
-QSettings* gSettings;
-QString gSearchTxt;
-shared_ptr<CatalogBuilder> gBuilder;
+#include <QString>
 
 
-void log(QString str) 
+struct Directory
 {
-	QFile file("log.txt");
-	file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append);
-	QTextStream os(&file);
-	os <<"[";
-	os << QDateTime::currentDateTime().toString("hh:mm:ss");
-	os << "] " << str << "\n";
-}
+	Directory() :
+		indexDirs(false),
+		indexExe(false),
+		depth(100)
+	{
+	}
+
+	Directory(QString n, QStringList t, bool d, bool e, int dep) :
+		indexDirs(d),
+		indexExe(e),
+		name(n),
+		types(t),
+		depth(dep)
+	{
+	}
+
+	bool indexDirs;
+	bool indexExe;
+	QString name;
+	QStringList types;
+	int depth;
+};
+
+
+#endif
